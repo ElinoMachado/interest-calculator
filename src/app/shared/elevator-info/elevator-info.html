@@ -1,0 +1,140 @@
+<ng-container *ngIf="formArray?.length">
+  <div class="identity main-container">
+    <div class="elevator-representation">
+      <h2 class="elevator-form__title">
+        Elevator {{ currentIndex() + 1 }} / {{ formArray.length }}
+      </h2>
+      <!-- Navegação -->
+      <div class="elevator-form__pagination">
+        <button (click)="prev()" [disabled]="currentIndex() === 0">◀</button>
+        <button
+          (click)="next()"
+          [disabled]="currentIndex() === formArray.length - 1"
+        >
+          ▶
+        </button>
+      </div>
+      <img
+        src="./assets/svg/elevator.svg"
+        alt="Elevator Icon"
+        class="elevator-icon"
+      />
+      <div class="options">
+        <div class="options__group">
+          <img
+            src="./assets/svg/trash.svg"
+            alt="Trash Icon"
+            class="trash-icon"
+          />
+          <label>Delete Elevator</label>
+        </div>
+        <div class="options__group">
+          <img
+            src="./assets/svg/create.svg"
+            alt="Create Icon"
+            class="create-icon"
+          />
+          <label>Create Elevator</label>
+        </div>
+      </div>
+    </div>
+    <div class="identity elevator-form" [formGroup]="currentForm">
+      <!-- Valores somente leitura -->
+      <div class="elevator-form__group elevator-form__group--read-only">
+        <label class="elevator-form__label">Total Profit:</label>
+        <span
+          class="elevator-form__value"
+          [ngClass]="{
+            'elevator-form__value--positivo': currentForm.value.totalProfit > 0,
+            'elevator-form__value--negativo': currentForm.value.totalProfit < 0
+          }"
+        >
+          +R$ {{ currentForm.value.totalProfit | number : "1.2-2" }}
+        </span>
+      </div>
+      <div class="elevator-form__group elevator-form__group--read-only">
+        <label class="elevator-form__label">Annual Profit:</label>
+        <span
+          class="elevator-form__value"
+          [ngClass]="{
+            'elevator-form__value--positivo':
+              currentForm.value.annualProfit > 0,
+            'elevator-form__value--negativo': currentForm.value.annualProfit < 0
+          }"
+        >
+          +R$ {{ currentForm.value.annualProfit | number : "1.2-2" }}
+        </span>
+      </div>
+      <div class="elevator-form__group elevator-form__group--read-only">
+        <label class="elevator-form__label">Monthly Profit:</label>
+        <span
+          class="elevator-form__value"
+          [ngClass]="{
+            'elevator-form__value--positivo':
+              currentForm.value.monthlyProfit > 0,
+            'elevator-form__value--negativo':
+              currentForm.value.monthlyProfit < 0
+          }"
+        >
+          +R$ {{ currentForm.value.monthlyProfit | number : "1.2-2" }}
+        </span>
+      </div>
+
+      <!-- Campos editáveis -->
+      <div class="elevator-form__group">
+        <label class="elevator-form__label">Name:</label>
+        <input
+          type="text"
+          formControlName="name"
+          class="elevator-form__input--editable identity-input"
+        />
+      </div>
+
+      <div class="elevator-form__group">
+        <label class="elevator-form__label">Installation Date:</label>
+        <input
+          type="date"
+          formControlName="installationDate"
+          class="elevator-form__input--editable identity-input"
+        />
+      </div>
+
+      <div class="elevator-form__group">
+        <label class="elevator-form__label">Last Maintenance:</label>
+        <input
+          type="date"
+          formControlName="lastMaintenance"
+          class="elevator-form__input--editable identity-input"
+        />
+      </div>
+
+      <div class="elevator-form__group">
+        <label class="elevator-form__label">Sale Value:</label>
+        <input
+          type="number"
+          formControlName="saleValue"
+          class="elevator-form__input--editable identity-input"
+        />
+      </div>
+
+      <div class="elevator-form__group">
+        <label class="elevator-form__label">Total Expenses:</label>
+        <input
+          type="number"
+          formControlName="totalExpenses"
+          class="elevator-form__input--editable"
+        />
+      </div>
+
+      <div class="elevator-form__group vertical">
+        <label class="elevator-form__label">Technical Notes: </label>
+        <textarea
+          formControlName="technicalNotes"
+          rows="3"
+          class="elevator-form__textarea"
+          placeholder="Enter notes about the elevator..."
+        ></textarea>
+      </div>
+    </div>
+  </div>
+</ng-container>

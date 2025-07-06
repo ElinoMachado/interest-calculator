@@ -1,0 +1,27 @@
+<div class="identity header-container">
+  <label>{{ "Receita Anual:" + "R$ 20.000,00" }}</label>
+  <div>
+    <input
+      type="text"
+      placeholder="Digite o nome do prédio ou elevador"
+      class="header-search"
+    />
+    <button class="header-search-button">Search</button>
+  </div>
+  <app-drop-down
+    [list]="['All', 'city 1', 'city 2', 'city 3', 'city 4']"
+    [label]="'Selecione uma cidade'"
+    (optionSelected)="citySelected($event)"
+  ></app-drop-down>
+  <app-drop-down
+    [list]="[
+      'All',
+      'High Profitability',
+      'Neutral Profitability',
+      'Losing Profit',
+      'Defective Elevator'
+    ]"
+    [label]="'Selecione um Status'"
+    (optionSelected)="citySelected($event)"
+  ></app-drop-down>
+</div>

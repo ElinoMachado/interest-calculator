@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.building {
+  width: 120px;
+}
+
+.name {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+svg.icon {
+  pointer-events: none;
+}
+
+svg.icon path {
+  pointer-events: auto;
+}

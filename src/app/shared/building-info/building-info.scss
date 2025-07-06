@@ -1,0 +1,56 @@
+.hotel-form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px 20px 0px 0px;
+  gap: 15px;
+}
+.hotel-form__title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+.hotel-form__label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.hotel-form__input--editable {
+  border: none;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+
+  &:hover {
+    border-bottom: 1px solid #ccc;
+    cursor: text;
+  }
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid #000;
+  }
+}
+.hotel-form__value--positivo {
+  color: #237803; // verde
+  font-weight: bold;
+}
+
+.hotel-form__value--negativo {
+  color: #aa3838; // vermelho
+}
+.hotel-form__group--read-only {
+  .hotel-form__value {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+.hotel-form__group--trash {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  margin: 0 auto;
+  img {
+    width: 30px;
+    cursor: pointer;
+  }
+}

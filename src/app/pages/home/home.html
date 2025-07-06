@@ -1,0 +1,34 @@
+TODO: Arrumar problema de deslocamento do dropdown quando é selecionado um valor
+maior ou menor
+<div class="parent">
+  <div class="div1">
+    <app-header />
+    <div class="options-main-group">
+      <div class="options__group" style="align-items: flex-start">
+        <label>{{ "User: " + username }}</label>
+        <label>{{ "Computer name: " + hostname }}</label>
+      </div>
+      <div>
+        <div class="options__group">
+          <img
+            src="./assets/svg/create.svg"
+            alt="Create Icon"
+            class="create-icon"
+          />
+          <label>Create Building</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="div2">
+    <label class="buildings-title">Active Buildings</label>
+    <app-carrosel
+      [buildingsInput]="buildings"
+      (selectedBuilding)="onBuildingSelected($event)"
+    />
+  </div>
+  <div class="div3">
+    <app-building-info [building]="selectedBuilding" />
+  </div>
+  <div class="div4"><app-elevator-info [elevators]="elevators" /></div>
+</div>

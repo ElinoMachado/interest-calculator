@@ -1,0 +1,94 @@
+<form [formGroup]="form" class="identity hotel-form">
+  <h1 class="hotel-form__title">Building information</h1>
+  <div class="hotel-form__group hotel-form__group--read-only">
+    <label class="hotel-form__label">Total Profit:</label>
+    <span
+      class="hotel-form__value"
+      [ngClass]="{
+        'hotel-form__value--positivo': totalProfit >= 0,
+        'hotel-form__value--negativo': totalProfit < 0
+      }"
+    >
+      R$
+      {{ totalProfit | number : "1.2-2" }}
+    </span>
+  </div>
+
+  <div class="hotel-form__group hotel-form__group--read-only">
+    <label class="hotel-form__label">Average Annual Profit:</label>
+    <span
+      class="hotel-form__value"
+      [ngClass]="{
+        'hotel-form__value--positivo': annualProfit >= 0,
+        'hotel-form__value--negativo': annualProfit < 0
+      }"
+    >
+      R$
+      {{ annualProfit | number : "1.2-2" }}
+    </span>
+  </div>
+
+  <div class="hotel-form__group hotel-form__group--read-only">
+    <label class="hotel-form__label">Average Monthly Profit:</label>
+    <span
+      class="hotel-form__value"
+      [ngClass]="{
+        'hotel-form__value--positivo': monthlyProfit >= 0,
+        'hotel-form__value--negativo': monthlyProfit < 0
+      }"
+    >
+      R$
+      {{ monthlyProfit | number : "1.2-2" }}
+    </span>
+  </div>
+
+  <div class="hotel-form__group">
+    <label class="hotel-form__label">Name:</label>
+    <input
+      class="hotel-form__input hotel-form__input--editable identity-input"
+      formControlName="name"
+      type="text"
+      placeholder="Building name"
+    />
+  </div>
+
+  <div class="hotel-form__group">
+    <label class="hotel-form__label">Address:</label>
+    <input
+      class="hotel-form__input hotel-form__input--editable identity-input"
+      formControlName="address"
+      type="text"
+      placeholder="Building address"
+    />
+  </div>
+
+  <div class="hotel-form__group">
+    <label class="hotel-form__label">Residents:</label>
+    <input
+      class="hotel-form__input hotel-form__input--editable identity-input"
+      formControlName="residents"
+      type="number"
+      placeholder="Number of residents"
+    />
+  </div>
+
+  <div class="hotel-form__group hotel-form__group--read-only">
+    <label class="hotel-form__label">Maintenance:</label>
+    <span class="hotel-form__value">{{ maintenanceCount }}</span>
+  </div>
+
+  <div class="hotel-form__group hotel-form__group--read-only">
+    <label class="hotel-form__label">Elevators:</label>
+    <span class="hotel-form__value">{{ elevatorCount }}</span>
+  </div>
+
+  <div class="hotel-form__group hotel-form__group--read-only">
+    <label class="hotel-form__label">Status:</label>
+    <span class="hotel-form__value">{{ status }}</span>
+  </div>
+
+  <div class="hotel-form__group hotel-form__group--trash">
+    <img src="./assets/svg/trash.svg" alt="Trash" class="trash-icon" />
+    <label class="hotel-form__label">Delete Building</label>
+  </div>
+</form>

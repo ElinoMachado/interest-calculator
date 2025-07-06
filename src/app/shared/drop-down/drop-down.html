@@ -1,0 +1,18 @@
+<div class="full-cotainer">
+  <label>{{ label }}: </label>
+  <div class="container in">
+    <div class="options in">
+      <label class="bold in">{{ selectedOption }}</label>
+    </div>
+    <div class="chevron in" (click)="toogle()">
+      <img class="in" [src]="'assets/svg/chevron-down.svg'" />
+    </div>
+  </div>
+  <div class="list in" *ngIf="showList">
+    @for (value of list; track $index) {
+    <div class="option in" (click)="selected(value)">
+      <label class="bold in"> {{ value }}</label>
+    </div>
+    }
+  </div>
+</div>

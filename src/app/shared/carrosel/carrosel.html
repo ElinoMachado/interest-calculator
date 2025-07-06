@@ -1,0 +1,18 @@
+<div class="carousel-wrapper">
+  <div class="carousel">
+    @for (building of buildings; track $index) {
+    <div
+      *ngIf="getPosition($index) !== null"
+      class="carousel-item"
+      [ngClass]="getPosition($index)"
+      (click)="focus($index)"
+    >
+      <app-building-simple [name]="building.name" [color]="building.color" />
+    </div>
+    }
+  </div>
+  <div class="carousel-indicators">
+    <button class="nav left" (click)="prev()">◀</button>
+    <button class="nav right" (click)="next()">▶</button>
+  </div>
+</div>
