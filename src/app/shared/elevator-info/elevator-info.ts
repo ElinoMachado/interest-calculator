@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  HostListener,
   inject,
   Input,
   Output,
@@ -78,6 +79,15 @@ export class ElevatorInfo {
   prev() {
     if (this.currentIndex() > 0) {
       this.currentIndex.update((i) => i - 1);
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowDown') {
+      this.prev();
+    } else if (event.key === 'ArrowUp') {
+      this.next();
     }
   }
   deleteElevator() {

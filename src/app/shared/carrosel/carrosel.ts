@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   signal,
@@ -78,6 +79,15 @@ export class Carrosel {
     if (this.currentIndex() > 0) {
       this.currentIndex.update((i) => i - 1);
       this.currentBuilding();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowLeft') {
+      this.prev();
+    } else if (event.key === 'ArrowRight') {
+      this.next();
     }
   }
 

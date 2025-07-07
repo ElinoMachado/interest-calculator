@@ -1,6 +1,8 @@
 {
   "name": "interest-calculator",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Calculadora de Juros com Electron e Angular",
+  "author": "Seu Nome",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -9,7 +11,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "electron": "npm run build && electron .",
-    "electron-dev": "concurrently \"ng serve\" \"wait-on http://localhost:4200 && electron .\""
+    "electron-dev": "concurrently \"ng serve\" \"wait-on http://localhost:4200 && electron .\"",
+    "start:prod": "npm run build -- --configuration production && electron .",
+    "electron:build": "npm run build -- --configuration production && npx electron-builder"
   },
   "prettier": {
     "overrides": [
@@ -40,6 +44,8 @@
     "@angular/compiler-cli": "^20.0.0",
     "@types/jasmine": "~5.1.0",
     "concurrently": "^9.2.0",
+    "electron": "26.1.0",
+    "electron-builder": "26.0.12",
     "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -49,5 +55,18 @@
     "sass": "^1.89.2",
     "typescript": "~5.8.2",
     "wait-on": "^8.0.3"
+  },
+  "build": {
+    "appId": "com.seunome.interestcalculator",
+    "productName": "InterestCalculator",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "main.js",
+      "preload.js",
+      "package.json"
+    ]
   }
 }
