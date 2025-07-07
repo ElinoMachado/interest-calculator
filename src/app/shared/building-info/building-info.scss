@@ -29,14 +29,6 @@
     border-bottom: 1px solid #000;
   }
 }
-.hotel-form__value--positivo {
-  color: #237803; // verde
-  font-weight: bold;
-}
-
-.hotel-form__value--negativo {
-  color: #aa3838; // vermelho
-}
 .hotel-form__group--read-only {
   .hotel-form__value {
     opacity: 0.6;

@@ -5,8 +5,8 @@
     <span
       class="hotel-form__value"
       [ngClass]="{
-        'hotel-form__value--positivo': totalProfit >= 0,
-        'hotel-form__value--negativo': totalProfit < 0
+        'gain-currency': totalProfit >= 0,
+        'loss-currency': totalProfit < 0
       }"
     >
       R$
@@ -19,8 +19,8 @@
     <span
       class="hotel-form__value"
       [ngClass]="{
-        'hotel-form__value--positivo': annualProfit >= 0,
-        'hotel-form__value--negativo': annualProfit < 0
+        'gain-currency': annualProfit >= 0,
+        'loss-currency': annualProfit < 0
       }"
     >
       R$
@@ -33,8 +33,8 @@
     <span
       class="hotel-form__value"
       [ngClass]="{
-        'hotel-form__value--positivo': monthlyProfit >= 0,
-        'hotel-form__value--negativo': monthlyProfit < 0
+        'gain-currency': monthlyProfit >= 0,
+        'loss-currency': monthlyProfit < 0
       }"
     >
       R$
@@ -74,21 +74,26 @@
 
   <div class="hotel-form__group hotel-form__group--read-only">
     <label class="hotel-form__label">Maintenance:</label>
-    <span class="hotel-form__value">{{ maintenanceCount }}</span>
+    <span class="hotel-form__value identity-input">{{ maintenanceCount }}</span>
   </div>
 
   <div class="hotel-form__group hotel-form__group--read-only">
     <label class="hotel-form__label">Elevators:</label>
-    <span class="hotel-form__value">{{ elevatorCount }}</span>
+    <span class="hotel-form__value identity-input">{{ elevatorCount }}</span>
   </div>
 
   <div class="hotel-form__group hotel-form__group--read-only">
     <label class="hotel-form__label">Status:</label>
-    <span class="hotel-form__value">{{ status }}</span>
+    <span class="hotel-form__value identity-input">{{ status }}</span>
   </div>
 
   <div class="hotel-form__group hotel-form__group--trash">
-    <img src="./assets/svg/trash.svg" alt="Trash" class="trash-icon" />
+    <img
+      (click)="deleteBuilding()"
+      src="./assets/svg/trash.svg"
+      alt="Trash"
+      class="trash-icon"
+    />
     <label class="hotel-form__label">Delete Building</label>
   </div>
 </form>

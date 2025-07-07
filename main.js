@@ -9,6 +9,7 @@ function createWindow() {
   window = new BrowserWindow({
     width: 1024,
     height: 768,
+    fullscreen: false,
     webPreferences: {
       contextIsolation: true, // segurança ativada
       nodeIntegration: false, // segurança ativada

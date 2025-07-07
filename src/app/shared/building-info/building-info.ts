@@ -5,6 +5,9 @@ import {
   OnChanges,
   SimpleChanges,
   OnInit,
+  inject,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -13,6 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Building } from '../../core/contracts/building.contract';
+import { BuildingStore } from '../../core/store/building.store';
 
 @Component({
   selector: 'app-building-info',
@@ -22,6 +26,8 @@ import { Building } from '../../core/contracts/building.contract';
   styleUrl: './building-info.scss',
 })
 export class BuildingInfo implements OnInit, OnChanges {
+  store = inject(BuildingStore);
+  @Output() deleteBuildingEvent = new EventEmitter<boolean>();
   @Input() building: Building | null = null;
   form: FormGroup;
 
@@ -44,7 +50,16 @@ export class BuildingInfo implements OnInit, OnChanges {
   ngOnInit(): void {
     this.updateForm();
   }
-
+  deleteBuilding() {
+    console.log(this.building);
+    if (this.building) {
+      console.log('Deletando prédio:', this.building.id);
+      this.store.select(this.building);
+      console.log(this.store.snapshot);
+      this.store.delete();
+      this.deleteBuildingEvent.emit(true);
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['building'] && changes['building'].currentValue) {
       this.updateForm();

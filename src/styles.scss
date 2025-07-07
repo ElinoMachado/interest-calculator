@@ -11,7 +11,15 @@ body {
   margin: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
-input.identity-input {
+.gain-currency {
+  color: #237803; // verde
+  font-weight: bold;
+}
+
+.loss-currency {
+  color: #aa3838; // vermelho
+}
+.identity-input {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
 }

@@ -22,6 +22,7 @@
       <div class="options">
         <div class="options__group">
           <img
+            (click)="deleteElevator()"
             src="./assets/svg/trash.svg"
             alt="Trash Icon"
             class="trash-icon"
@@ -30,6 +31,7 @@
         </div>
         <div class="options__group">
           <img
+            (click)="createElevator()"
             src="./assets/svg/create.svg"
             alt="Create Icon"
             class="create-icon"
@@ -45,8 +47,8 @@
         <span
           class="elevator-form__value"
           [ngClass]="{
-            'elevator-form__value--positivo': currentForm.value.totalProfit > 0,
-            'elevator-form__value--negativo': currentForm.value.totalProfit < 0
+            'gain-currency': currentForm.value.totalProfit > 0,
+            'loss-currency': currentForm.value.totalProfit < 0
           }"
         >
           +R$ {{ currentForm.value.totalProfit | number : "1.2-2" }}
@@ -57,9 +59,8 @@
         <span
           class="elevator-form__value"
           [ngClass]="{
-            'elevator-form__value--positivo':
-              currentForm.value.annualProfit > 0,
-            'elevator-form__value--negativo': currentForm.value.annualProfit < 0
+            'gain-currency': currentForm.value.annualProfit > 0,
+            'loss-currency': currentForm.value.annualProfit < 0
           }"
         >
           +R$ {{ currentForm.value.annualProfit | number : "1.2-2" }}
@@ -70,10 +71,8 @@
         <span
           class="elevator-form__value"
           [ngClass]="{
-            'elevator-form__value--positivo':
-              currentForm.value.monthlyProfit > 0,
-            'elevator-form__value--negativo':
-              currentForm.value.monthlyProfit < 0
+            'gain-currency': currentForm.value.monthlyProfit > 0,
+            'loss-currency': currentForm.value.monthlyProfit < 0
           }"
         >
           +R$ {{ currentForm.value.monthlyProfit | number : "1.2-2" }}
@@ -122,7 +121,7 @@
         <input
           type="number"
           formControlName="totalExpenses"
-          class="elevator-form__input--editable"
+          class="elevator-form__input--editable identity-input"
         />
       </div>
 

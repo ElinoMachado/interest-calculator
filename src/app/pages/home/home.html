@@ -1,5 +1,3 @@
-TODO: Arrumar problema de deslocamento do dropdown quando é selecionado um valor
-maior ou menor
 <div class="parent">
   <div class="div1">
     <app-header />
@@ -23,12 +21,21 @@ maior ou menor
   <div class="div2">
     <label class="buildings-title">Active Buildings</label>
     <app-carrosel
-      [buildingsInput]="buildings"
+      [buildingsInput]="buildingStore.buildings()"
       (selectedBuilding)="onBuildingSelected($event)"
     />
   </div>
+
   <div class="div3">
-    <app-building-info [building]="selectedBuilding" />
+    <app-building-info
+      [building]="selectedBuilding"
+      (deleteBuildingEvent)="onBuildingDeleted()"
+    />
   </div>
-  <div class="div4"><app-elevator-info [elevators]="elevators" /></div>
+  <div class="div4">
+    <app-elevator-info
+      [elevators]="elevators"
+      (deleteElevatorEvent)="onElevatorDeleted()"
+    />
+  </div>
 </div>

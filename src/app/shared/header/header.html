@@ -1,5 +1,15 @@
 <div class="identity header-container">
-  <label>{{ "Receita Anual:" + "R$ 20.000,00" }}</label>
+  <label>
+    Receita total:
+    <span
+      [ngClass]="{
+        'gain-currency': (store.summaryProfit()?.totalProfit ?? 0) >= 0,
+        'loss-currency': (store.summaryProfit()?.totalProfit ?? 0) < 0
+      }"
+    >
+      R${{ store.summaryProfit()?.totalProfit | number : "1.2-2" }}
+    </span>
+  </label>
   <div>
     <input
       type="text"

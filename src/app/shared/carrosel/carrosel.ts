@@ -64,7 +64,6 @@ export class Carrosel {
   });
 
   currentBuilding() {
-    console.log('Current building:', this.buildings[this.currentIndex()]);
     this.selectedBuilding.emit(this.buildings[this.currentIndex()] ?? null);
   }
 
