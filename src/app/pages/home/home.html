@@ -28,13 +28,13 @@
 
   <div class="div3">
     <app-building-info
-      [building]="selectedBuilding"
+      [building]="buildingStore.building()"
       (deleteBuildingEvent)="onBuildingDeleted()"
     />
   </div>
   <div class="div4">
     <app-elevator-info
-      [elevators]="elevators"
+      [elevators]="buildingStore.building().elevators"
       (deleteElevatorEvent)="onElevatorDeleted()"
     />
   </div>

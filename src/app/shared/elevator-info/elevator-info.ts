@@ -43,7 +43,6 @@ export class ElevatorInfo {
   }
 
   private buildFormArray() {
-    console.log(this.elevators);
     const groups = this.elevators.map((elevator) =>
       this.fb.group({
         name: [elevator.name, Validators.required],
