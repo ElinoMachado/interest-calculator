@@ -31,9 +31,13 @@ export class ElevatorStore {
     const building = this.buildingStore.building();
     const updated = {
       ...building,
-      elevators: building.elevators.map((e, i) => (i === index ? elevator : e)),
+      elevators: building.elevators.map((e) =>
+        elevator.id === e.id ? elevator : e
+      ),
     };
+    console.log(building, updated, elevator);
     this.buildingStore.select(updated);
+    this.buildingStore.save();
   }
 
   remove(index: number) {

@@ -17,6 +17,7 @@ import {
 } from '@angular/forms';
 import { Building } from '../../core/contracts/building.contract';
 import { BuildingStore } from '../../core/store/building.store';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-building-info',
@@ -83,5 +84,25 @@ export class BuildingInfo implements OnInit, OnChanges {
     this.maintenanceCount = this.building.maintenanceCount;
     this.elevatorCount = this.building.elevators.length;
     this.status = this.building.status;
+  }
+  updateName() {
+    this.store.updateField('name', this.form.value.name);
+    console.log(this.store.building());
+    this.store.save();
+  }
+  updateAddress() {
+    this.store.updateField('address', this.form.value.address);
+    console.log(this.store.building());
+    this.store.save();
+  }
+  updateResidents() {
+    const residents = parseInt(this.form.value.residents, 10);
+    if (isNaN(residents) || residents < 1) {
+      this.form.patchValue({ residents: 0 });
+      return;
+    }
+    this.store.updateField('residents', residents);
+    console.log(this.store.building());
+    this.store.save();
   }
 }

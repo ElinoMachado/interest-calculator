@@ -74,7 +74,7 @@ export class BuildingStore {
     this.loading.set(true);
     this.service.update(building.id, building).subscribe({
       next: (updated) => {
-        console.log(updated);
+        console.log();
         this.state.set(updated);
         this.loading.set(false);
         this.getAllBuildings(); // atualiza lista

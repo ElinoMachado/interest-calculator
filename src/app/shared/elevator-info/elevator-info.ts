@@ -45,9 +45,16 @@ export class ElevatorInfo {
   private buildFormArray() {
     const groups = this.elevators.map((elevator) =>
       this.fb.group({
+        id: [elevator.id],
         name: [elevator.name, Validators.required],
-        installationDate: [elevator.installationDate, Validators.required],
-        lastMaintenance: [elevator.lastMaintenance, Validators.required],
+        installationDate: [
+          this.formatDate(elevator.installationDate),
+          Validators.required,
+        ],
+        lastMaintenance: [
+          this.formatDate(elevator.lastMaintenance),
+          Validators.required,
+        ],
         saleValue: [elevator.saleValue, Validators.required],
         totalExpenses: [elevator.totalExpenses, Validators.required],
         technicalNotes: [elevator.technicalNotes],
@@ -58,7 +65,10 @@ export class ElevatorInfo {
     );
     this.formArray = this.fb.array(groups);
   }
-
+  private formatDate(date: string | Date): string {
+    const d = new Date(date);
+    return d.toISOString().split('T')[0]; // Retorna apenas "yyyy-MM-dd"
+  }
   next() {
     if (this.currentIndex() < this.formArray.length - 1) {
       this.currentIndex.update((i) => i + 1);
@@ -72,12 +82,13 @@ export class ElevatorInfo {
   }
   deleteElevator() {
     if (this.formArray.length > 0) {
+      this.store.remove(this.currentIndex());
       this.formArray.removeAt(this.currentIndex());
       if (this.currentIndex() >= this.formArray.length) {
         this.currentIndex.set(this.formArray.length - 1);
       }
     }
-    this.store.remove(this.currentIndex());
+
     this.deleteElevatorEvent.emit(true);
   }
   createElevator() {
@@ -122,5 +133,39 @@ export class ElevatorInfo {
 
   addElevator(e: Elevator) {
     this.store.add(e);
+  }
+
+  updateName() {
+    const elevator = this.currentForm.value;
+    this.updateElevator({ ...elevator, name: elevator.name });
+  }
+  updateInstallationDate() {
+    const elevator = this.currentForm.value;
+    this.updateElevator({
+      ...elevator,
+      installationDate: elevator.installationDate,
+    });
+  }
+  updateLastMaintenance() {
+    const elevator = this.currentForm.value;
+    this.updateElevator({
+      ...elevator,
+      lastMaintenance: elevator.lastMaintenance,
+    });
+  }
+  updateSaleValue() {
+    const elevator = this.currentForm.value;
+    this.updateElevator({ ...elevator, saleValue: elevator.saleValue });
+  }
+  updateTotalExpenses() {
+    const elevator = this.currentForm.value;
+    this.updateElevator({ ...elevator, totalExpenses: elevator.totalExpenses });
+  }
+  updateTechnicalNotes() {
+    const elevator = this.currentForm.value;
+    this.updateElevator({
+      ...elevator,
+      technicalNotes: elevator.technicalNotes,
+    });
   }
 }

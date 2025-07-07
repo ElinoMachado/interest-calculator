@@ -51,11 +51,11 @@
             'loss-currency': currentForm.value.totalProfit < 0
           }"
         >
-          +R$ {{ currentForm.value.totalProfit | number : "1.2-2" }}
+          R$ {{ currentForm.value.totalProfit | number : "1.2-2" }}
         </span>
       </div>
       <div class="elevator-form__group elevator-form__group--read-only">
-        <label class="elevator-form__label">Annual Profit:</label>
+        <label class="elevator-form__label">Annual Profit: </label>
         <span
           class="elevator-form__value"
           [ngClass]="{
@@ -63,11 +63,11 @@
             'loss-currency': currentForm.value.annualProfit < 0
           }"
         >
-          +R$ {{ currentForm.value.annualProfit | number : "1.2-2" }}
+          R$ {{ currentForm.value.annualProfit | number : "1.2-2" }}
         </span>
       </div>
       <div class="elevator-form__group elevator-form__group--read-only">
-        <label class="elevator-form__label">Monthly Profit:</label>
+        <label class="elevator-form__label">Monthly Profit: </label>
         <span
           class="elevator-form__value"
           [ngClass]="{
@@ -75,15 +75,16 @@
             'loss-currency': currentForm.value.monthlyProfit < 0
           }"
         >
-          +R$ {{ currentForm.value.monthlyProfit | number : "1.2-2" }}
+          R$ {{ currentForm.value.monthlyProfit | number : "1.2-2" }}
         </span>
       </div>
 
       <!-- Campos editáveis -->
       <div class="elevator-form__group">
-        <label class="elevator-form__label">Name:</label>
+        <label class="elevator-form__label">Name: </label>
         <input
           type="text"
+          (change)="updateName()"
           formControlName="name"
           class="elevator-form__input--editable identity-input"
         />
@@ -93,6 +94,7 @@
         <label class="elevator-form__label">Installation Date:</label>
         <input
           type="date"
+          (change)="updateInstallationDate()"
           formControlName="installationDate"
           class="elevator-form__input--editable identity-input"
         />
@@ -102,6 +104,7 @@
         <label class="elevator-form__label">Last Maintenance:</label>
         <input
           type="date"
+          (change)="updateLastMaintenance()"
           formControlName="lastMaintenance"
           class="elevator-form__input--editable identity-input"
         />
@@ -111,6 +114,7 @@
         <label class="elevator-form__label">Sale Value:</label>
         <input
           type="number"
+          (change)="updateSaleValue()"
           formControlName="saleValue"
           class="elevator-form__input--editable identity-input"
         />
@@ -120,6 +124,7 @@
         <label class="elevator-form__label">Total Expenses:</label>
         <input
           type="number"
+          (change)="updateTotalExpenses()"
           formControlName="totalExpenses"
           class="elevator-form__input--editable identity-input"
         />
@@ -130,6 +135,7 @@
         <textarea
           formControlName="technicalNotes"
           rows="3"
+          (change)="updateTechnicalNotes()"
           class="elevator-form__textarea"
           placeholder="Enter notes about the elevator..."
         ></textarea>
