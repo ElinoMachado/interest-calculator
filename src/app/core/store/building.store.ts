@@ -25,6 +25,7 @@ export class BuildingStore {
   private summary = signal<Summary | null>(null);
   private loading = signal(false);
   private error = signal<string | null>(null);
+  selectedBuildingIndex = signal<number>(0);
 
   readonly building = computed(() => this.state());
   readonly buildings = computed(() => this.all());
@@ -86,10 +87,12 @@ export class BuildingStore {
     });
   }
 
-  create() {
-    const building = this.state();
+  create(buildingData?: Building) {
+    if (!buildingData) {
+      buildingData = this.state();
+    }
     this.loading.set(true);
-    this.service.create(building).subscribe({
+    this.service.create(buildingData).subscribe({
       next: (created) => {
         this.state.set(created);
         this.loading.set(false);
@@ -121,7 +124,9 @@ export class BuildingStore {
   reset() {
     this.state.set(initialState);
   }
-
+  selectIndex(index: number) {
+    this.selectedBuildingIndex.set(index);
+  }
   select(building: Building) {
     this.state.set({ ...building });
   }

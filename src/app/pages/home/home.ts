@@ -6,11 +6,6 @@ import { Building } from '../../core/contracts/building.contract';
 import { Elevator } from '../../core/contracts/elevator.contract';
 import { Header } from '../../shared/header/header';
 import { SystemInfo } from '../../core/services/system-info';
-import { BuildingElevatorService } from '../../core/services/building-elevator-service';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
 import { BuildingStore } from '../../core/store/building.store';
 
 @Component({
@@ -24,10 +19,7 @@ export class Home {
   selectedBuilding: Building | null = null;
   elevators: Elevator[] = [];
   onBuildingSelected(building: Building) {
-    console.log('Selected building:', building);
     this.buildingStore.select(building);
-    this.selectedBuilding = building;
-    this.elevators = building.elevators ?? [];
   }
   username = '';
   hostname = '';
@@ -40,26 +32,35 @@ export class Home {
     this.hostname = info.hostname;
     this.buildingStore.getAllBuildings();
   }
-  onBuildingDeleted() {
-    const buildings = this.buildingStore.snapshotAll;
 
-    if (!this.selectedBuilding) return;
-
-    const index = buildings.findIndex(
-      (b) => b.id === this.selectedBuilding!.id
-    );
-    const next = buildings[index + 1] || buildings[index - 1] || null;
-
-    this.selectedBuilding = next;
-    this.elevators = next?.elevators ?? [];
-  }
-  onElevatorDeleted() {
-    /* if (!this.selectedBuilding) return;
-
-    const elevators = this.selectedBuilding.elevators || [];
-    const index = elevators.findIndex((e) => e.id === this.elevators[0]?.id);
-    const next = elevators[index + 1] || elevators[index - 1] || null;
-
-    this.elevators = next ? [next] : []; */
+  createBuilding() {
+    const newBuilding: Building = {
+      id: '',
+      name: 'new Building',
+      address: '',
+      residents: 0,
+      maintenanceCount: 0,
+      elevators: [
+        {
+          id: '',
+          name: 'New Elevator',
+          installationDate: new Date(),
+          lastMaintenance: new Date(),
+          annualProfit: 0,
+          monthlyProfit: 0,
+          totalProfit: 0,
+          saleValue: 0,
+          technicalNotes: '',
+          totalExpenses: 0,
+        },
+      ],
+      annualProfit: 0,
+      color: 'gray',
+      monthlyProfit: 0,
+      status: '',
+      totalProfit: 0,
+    };
+    this.buildingStore.create(newBuilding);
+    this.buildingStore.selectIndex(0);
   }
 }

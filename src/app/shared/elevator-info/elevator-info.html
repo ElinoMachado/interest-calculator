@@ -2,14 +2,20 @@
   <div class="identity main-container">
     <div class="elevator-representation">
       <h2 class="elevator-form__title">
-        Elevator {{ currentIndex() + 1 }} / {{ formArray.length }}
+        Elevator {{ store.selectedElevatorIndex() + 1 }} /
+        {{ formArray.length }}
       </h2>
       <!-- Navegação -->
       <div class="elevator-form__pagination">
-        <button (click)="prev()" [disabled]="currentIndex() === 0">◀</button>
+        <button
+          (click)="prev()"
+          [disabled]="store.selectedElevatorIndex() === 0"
+        >
+          ◀
+        </button>
         <button
           (click)="next()"
-          [disabled]="currentIndex() === formArray.length - 1"
+          [disabled]="store.selectedElevatorIndex() === formArray.length - 1"
         >
           ▶
         </button>

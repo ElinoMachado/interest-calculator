@@ -32,14 +32,13 @@ export class ElevatorInfo {
   @Output() deleteElevatorEvent = new EventEmitter<boolean>();
 
   formArray!: FormArray<FormGroup>;
-  currentIndex = signal(0); // 👈 controle de página
 
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.store.selectedElevatorIndex());
     if (changes['elevators'] && this.elevators?.length) {
       this.buildFormArray();
-      this.currentIndex.set(0); // resetar ao carregar novos dados
     }
   }
 
@@ -71,14 +70,14 @@ export class ElevatorInfo {
     return d.toISOString().split('T')[0]; // Retorna apenas "yyyy-MM-dd"
   }
   next() {
-    if (this.currentIndex() < this.formArray.length - 1) {
-      this.currentIndex.update((i) => i + 1);
+    if (this.store.selectedElevatorIndex() < this.formArray.length - 1) {
+      this.store.selectedElevatorIndex.update((i) => i + 1);
     }
   }
 
   prev() {
-    if (this.currentIndex() > 0) {
-      this.currentIndex.update((i) => i - 1);
+    if (this.store.selectedElevatorIndex() > 0) {
+      this.store.selectedElevatorIndex.update((i) => i - 1);
     }
   }
 
@@ -92,10 +91,10 @@ export class ElevatorInfo {
   }
   deleteElevator() {
     if (this.formArray.length > 0) {
-      this.store.remove(this.currentIndex());
-      this.formArray.removeAt(this.currentIndex());
-      if (this.currentIndex() >= this.formArray.length) {
-        this.currentIndex.set(this.formArray.length - 1);
+      this.store.remove(this.store.selectedElevatorIndex());
+      this.formArray.removeAt(this.store.selectedElevatorIndex());
+      if (this.store.selectedElevatorIndex() >= this.formArray.length) {
+        this.store.selectedElevatorIndex.set(this.formArray.length - 1);
       }
     }
 
@@ -114,7 +113,7 @@ export class ElevatorInfo {
       monthlyProfit: [''],
     });
     this.formArray.push(newElevator);
-    this.currentIndex.set(this.formArray.length - 1);
+    this.store.selectedElevatorIndex.set(this.formArray.length - 1);
     this.store.add({
       id: '', // ID será gerado pelo backend
       name: '',
@@ -130,7 +129,7 @@ export class ElevatorInfo {
   }
 
   get currentForm() {
-    return this.formArray?.at(this.currentIndex()) as FormGroup;
+    return this.formArray?.at(this.store.selectedElevatorIndex()) as FormGroup;
   }
 
   selectElevator(i: number) {

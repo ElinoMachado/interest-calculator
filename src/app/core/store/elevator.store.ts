@@ -5,7 +5,7 @@ import { BuildingStore } from '../../core/store/building.store';
 export class ElevatorStore {
   private buildingStore = inject(BuildingStore);
 
-  selectedElevatorIndex = signal<number | null>(null);
+  selectedElevatorIndex = signal<number>(0);
 
   readonly elevators = computed(() => this.buildingStore.building().elevators);
   readonly selectedElevator = computed(() => {
@@ -50,6 +50,6 @@ export class ElevatorStore {
     console.log(updated);
     this.buildingStore.select(updated);
     this.buildingStore.save();
-    this.selectedElevatorIndex.set(null);
+    this.selectedElevatorIndex.set(0);
   }
 }

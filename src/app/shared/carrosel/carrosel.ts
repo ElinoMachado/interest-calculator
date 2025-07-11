@@ -3,6 +3,7 @@ import {
   computed,
   EventEmitter,
   HostListener,
+  inject,
   Input,
   Output,
   signal,
@@ -11,6 +12,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { BuildingSimple } from '../building-simple/building-simple';
 import { CommonModule } from '@angular/common';
 import { Building } from '../../core/contracts/building.contract';
+import { ElevatorStore } from '../../core/store/elevator.store';
+import { BuildingElevatorService } from '../../core/services/building-elevator-service';
+import { BuildingStore } from '../../core/store/building.store';
 
 @Component({
   selector: 'app-carrosel',
@@ -37,12 +41,14 @@ import { Building } from '../../core/contracts/building.contract';
   ],
 })
 export class Carrosel {
+  elevatorStore = inject(ElevatorStore);
+  buildingStore = inject(BuildingStore);
   @Output() selectedBuilding = new EventEmitter<Building>();
   @Input()
   set buildingsInput(value: Building[]) {
     this._buildings.set(value ?? []);
   }
-  private readonly maxVisible = 10;
+  private readonly maxVisible = 20;
 
   private readonly _buildings = signal<Building[]>([]);
 
@@ -50,13 +56,11 @@ export class Carrosel {
     return this._buildings();
   }
 
-  currentIndex = signal(0);
-
   visibleBuildings = computed(() => {
     const half = Math.floor(this.maxVisible / 2);
     const buildingsLength = this.buildings.length;
 
-    let start = this.currentIndex() - half;
+    let start = this.buildingStore.selectedBuildingIndex() - half;
     if (start < 0) start = 0;
     if (start > buildingsLength - this.maxVisible)
       start = buildingsLength - this.maxVisible;
@@ -65,20 +69,31 @@ export class Carrosel {
   });
 
   currentBuilding() {
-    this.selectedBuilding.emit(this.buildings[this.currentIndex()] ?? null);
+    this.selectedBuilding.emit(
+      this.buildings[this.buildingStore.selectedBuildingIndex()] ?? null
+    );
+  }
+
+  resetElevatorIndex() {
+    this.elevatorStore.selectedElevatorIndex.set(0);
   }
 
   next() {
-    if (this.currentIndex() < this.buildings.length - 1) {
-      this.currentIndex.update((i) => i + 1);
+    if (
+      this.buildingStore.selectedBuildingIndex() <
+      this.buildings.length - 1
+    ) {
+      this.buildingStore.selectedBuildingIndex.update((i) => i + 1);
       this.currentBuilding();
+      this.resetElevatorIndex();
     }
   }
 
   prev() {
-    if (this.currentIndex() > 0) {
-      this.currentIndex.update((i) => i - 1);
+    if (this.buildingStore.selectedBuildingIndex() > 0) {
+      this.buildingStore.selectedBuildingIndex.update((i) => i - 1);
       this.currentBuilding();
+      this.resetElevatorIndex();
     }
   }
 
@@ -92,14 +107,14 @@ export class Carrosel {
   }
 
   focus(index: number) {
-    if (index !== this.currentIndex()) {
-      this.currentIndex.set(index);
+    if (index !== this.buildingStore.selectedBuildingIndex()) {
+      this.buildingStore.selectedBuildingIndex.set(index);
       this.currentBuilding();
     }
   }
 
   getPosition(index: number): string | null {
-    const center = this.currentIndex();
+    const center = this.buildingStore.selectedBuildingIndex();
     const diff = index - center;
 
     const maxSide = Math.floor(this.maxVisible / 2);
