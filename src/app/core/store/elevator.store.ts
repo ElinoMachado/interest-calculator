@@ -42,14 +42,16 @@ export class ElevatorStore {
 
   remove(index: number) {
     const building = this.buildingStore.building();
-    console.log(building);
     const updated = {
       ...building,
       elevators: building.elevators.filter((_, i) => i !== index),
     };
-    console.log(updated);
     this.buildingStore.select(updated);
-    this.buildingStore.save();
+    if (updated.elevators.length == 0) {
+      this.buildingStore.delete();
+    } else {
+      this.buildingStore.save();
+    }
     this.selectedElevatorIndex.set(0);
   }
 }

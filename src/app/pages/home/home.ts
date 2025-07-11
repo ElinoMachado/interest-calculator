@@ -30,7 +30,7 @@ export class Home {
     const info = await this.systemInfoService.getSystemInfo();
     this.username = info.username;
     this.hostname = info.hostname;
-    this.buildingStore.getAllBuildings();
+    this.buildingStore.getAllBuildings(false);
   }
 
   createBuilding() {

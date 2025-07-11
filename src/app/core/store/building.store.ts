@@ -52,15 +52,15 @@ export class BuildingStore {
     });
   }
 
-  getAllBuildings() {
+  getAllBuildings(deleting: boolean) {
     this.loading.set(true);
     this.error.set(null);
     this.service.getAll().subscribe({
       next: (summary: BuildingsSummary) => {
         this.all.set(summary.buildings);
         this.summary.set(summary.summary);
-        console.log(this.summary());
         this.loading.set(false);
+        if (deleting) this.setBuildingPosition(-1);
       },
       error: () => {
         this.error.set('Erro ao buscar lista de prédios');
@@ -78,7 +78,7 @@ export class BuildingStore {
         console.log();
         this.state.set(updated);
         this.loading.set(false);
-        this.getAllBuildings(); // atualiza lista
+        this.getAllBuildings(false); // atualiza lista
       },
       error: () => {
         this.error.set('Erro ao salvar prédio');
@@ -96,7 +96,7 @@ export class BuildingStore {
       next: (created) => {
         this.state.set(created);
         this.loading.set(false);
-        this.getAllBuildings();
+        this.getAllBuildings(false);
       },
       error: () => {
         this.error.set('Erro ao criar prédio');
@@ -105,13 +105,28 @@ export class BuildingStore {
     });
   }
 
+  setBuildingPosition(direction: number) {
+    this.selectedBuildingIndex.update(() => {
+      if (this.selectedBuildingIndex() === 0) {
+        return this.selectedBuildingIndex();
+      }
+      return this.selectedBuildingIndex() + direction;
+    });
+    this.refreshSelectedBuilding();
+  }
+
+  refreshSelectedBuilding() {
+    this.select(this.buildings()[this.selectedBuildingIndex()]);
+    console.log(this.state());
+  }
+
   delete() {
     const id = this.state().id;
     this.loading.set(true);
     this.service.delete(id).subscribe({
       next: () => {
         this.reset();
-        this.getAllBuildings();
+        this.getAllBuildings(true);
         this.loading.set(false);
       },
       error: () => {
@@ -128,6 +143,7 @@ export class BuildingStore {
     this.selectedBuildingIndex.set(index);
   }
   select(building: Building) {
+    console.log(building);
     this.state.set({ ...building });
   }
 

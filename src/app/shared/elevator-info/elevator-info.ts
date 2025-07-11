@@ -29,7 +29,6 @@ import { ElevatorStore } from '../../core/store/elevator.store';
 export class ElevatorInfo {
   store = inject(ElevatorStore);
   @Input() elevators: Elevator[] = [];
-  @Output() deleteElevatorEvent = new EventEmitter<boolean>();
 
   formArray!: FormArray<FormGroup>;
 
@@ -97,8 +96,6 @@ export class ElevatorInfo {
         this.store.selectedElevatorIndex.set(this.formArray.length - 1);
       }
     }
-
-    this.deleteElevatorEvent.emit(true);
   }
   createElevator() {
     const newElevator = this.fb.group({

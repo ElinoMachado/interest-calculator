@@ -13,7 +13,7 @@ export class Header {
   store = inject(BuildingStore);
 
   ngOnInit(): void {
-    this.store.getAllBuildings(); // ← Carrega os dados no início
+    this.store.getAllBuildings(false); // ← Carrega os dados no início
   }
   citySelected(option: string) {
     console.log('Selected city:', option);

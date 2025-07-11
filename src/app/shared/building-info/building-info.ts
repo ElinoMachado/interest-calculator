@@ -17,7 +17,7 @@ import {
 } from '@angular/forms';
 import { Building } from '../../core/contracts/building.contract';
 import { BuildingStore } from '../../core/store/building.store';
-import { debounceTime } from 'rxjs';
+import { ElevatorStore } from '../../core/store/elevator.store';
 
 @Component({
   selector: 'app-building-info',
@@ -28,7 +28,7 @@ import { debounceTime } from 'rxjs';
 })
 export class BuildingInfo implements OnInit, OnChanges {
   store = inject(BuildingStore);
-  @Output() deleteBuildingEvent = new EventEmitter<boolean>();
+  storeElevator = inject(ElevatorStore);
   @Input() building: Building | null = null;
   form: FormGroup;
 
@@ -54,11 +54,11 @@ export class BuildingInfo implements OnInit, OnChanges {
   deleteBuilding() {
     console.log(this.building);
     if (this.building) {
-      console.log('Deletando prédio:', this.building.id);
       this.store.select(this.building);
       console.log(this.store.snapshot);
       this.store.delete();
-      this.deleteBuildingEvent.emit(true);
+      this.updateForm();
+      this.storeElevator.selectedElevatorIndex.set(0);
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
